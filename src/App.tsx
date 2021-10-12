@@ -3,12 +3,13 @@ import "./App.css";
 import QuestionCard from "./components/QuestionCard";
 import { fetchQuizQuestions, Difficulty, QuestionsState } from "./API";
 
-type AnswerObject = {
+export type AnswerObject = {
   question: string;
   answer: string;
   correct: boolean;
   correctAnswer: string;
 };
+
 
 const TOTAL_QUESTIONS = 10;
 
