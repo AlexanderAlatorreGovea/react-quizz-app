@@ -23,8 +23,8 @@ const App = () => {
   const [gameOver, setGameOver] = useState(true);
 
   const isNotGameOver = !gameOver;
-  const isNotLoading = !loading;
-  const userAnsweredCurrentQuestion = userAnswers.length === number + 1;
+  const hasFinishedLoading = !loading;
+  const userClickedAnOption = userAnswers.length === number + 1;
   const isNotTheLastQuestion = number !== TOTAL_QUESTIONS - 1;
 
   const startTrivia = async () => {
@@ -38,7 +38,7 @@ const App = () => {
 
     setQuestions(newQuestions);
     setScore(0);
-    setUserAnswers([]);
+    setUserAnswers([]); 
     setNumber(0);
     setLoading(false);
   };
@@ -86,7 +86,7 @@ const App = () => {
       ) : null}
       {isNotGameOver ? <p className="score">Score: {score}</p> : null}
       {loading ? <p>Loading Questions...</p> : null}
-      {isNotLoading && isNotGameOver && (
+      {hasFinishedLoading && isNotGameOver && (
         <QuestionCard
           questionNr={number + 1}
           totalQuestions={TOTAL_QUESTIONS}
@@ -97,8 +97,8 @@ const App = () => {
         />
       )}
       {isNotGameOver &&
-      isNotLoading &&
-      userAnsweredCurrentQuestion &&
+      hasFinishedLoading &&
+      userClickedAnOption &&
       isNotTheLastQuestion ? (
         <button className="next" onClick={nextQuestion}>
           Next Question
