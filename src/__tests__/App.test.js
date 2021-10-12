@@ -67,4 +67,18 @@ describe("<App/>", () => {
 
     expect(disabledBtn).toHaveProperty("disabled", true);
   });
+
+  it("expets 'score' to be 1 and Question to be '1/10'", async () => {
+    user.click(screen.getByText(/start/i));
+
+    await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
+
+    const correctAnswer = await screen.findByText(/Pac-Man/i);
+
+    user.click(correctAnswer);
+
+    const score = await screen.findByText("Score: 1");
+
+    expect(score).toBeInTheDocument();
+  });
 });
