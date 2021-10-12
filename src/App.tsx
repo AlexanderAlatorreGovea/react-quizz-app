@@ -21,6 +21,11 @@ const App = () => {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
 
+  const isNotGameOver = !gameOver;
+  const isNotLoading = !loading;
+  const userAnsweredCurrentQuestion = userAnswers.length === number + 1;
+  const isNotTheLastQuestion = number !== TOTAL_QUESTIONS - 1;
+
   const startTrivia = async () => {
     setLoading(true);
     setGameOver(false);
@@ -38,7 +43,6 @@ const App = () => {
   };
 
   const checkAnswer = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const isNotGameOver = !gameOver;
     if (isNotGameOver) {
       const answer = event.currentTarget.value;
 
@@ -58,7 +62,17 @@ const App = () => {
     }
   };
 
-  const nextQuestion = () => {};
+  const nextQuestion = () => {
+    //move on to the next question if you are not int hte last question
+    const nextQuestion = number + 1;
+    const lastQuestion = nextQuestion === TOTAL_QUESTIONS;
+
+    if (lastQuestion) {
+      setGameOver(true);
+    }
+
+    setNumber(nextQuestion);
+  };
 
   return (
     <div className="App">
@@ -69,9 +83,9 @@ const App = () => {
           Start
         </button>
       ) : null}
-      {!gameOver ? <p className="score">Score: {score}</p> : null}
+      {isNotGameOver ? <p className="score">Score: {score}</p> : null}
       {loading ? <p>Loading Questions...</p> : null}
-      {!loading && !gameOver && (
+      {isNotLoading && isNotGameOver && (
         <QuestionCard
           questionNr={number + 1}
           totalQuestions={TOTAL_QUESTIONS}
@@ -81,10 +95,10 @@ const App = () => {
           callback={checkAnswer}
         />
       )}
-      {!gameOver &&
-      !loading &&
-      userAnswers.length === number + 1 &&
-      number !== TOTAL_QUESTIONS - 1 ? (
+      {isNotGameOver &&
+      isNotLoading &&
+      userAnsweredCurrentQuestion &&
+      isNotTheLastQuestion ? (
         <button className="next" onClick={nextQuestion}>
           Next Question
         </button>
