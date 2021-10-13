@@ -10,7 +10,6 @@ export type AnswerObject = {
   correctAnswer: string;
 };
 
-
 const TOTAL_QUESTIONS = 10;
 
 const App = () => {
@@ -38,7 +37,7 @@ const App = () => {
 
     setQuestions(newQuestions);
     setScore(0);
-    setUserAnswers([]); 
+    setUserAnswers([]);
     setNumber(0);
     setLoading(false);
   };
